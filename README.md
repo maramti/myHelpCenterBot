@@ -1,4 +1,4 @@
-myHelpCenterBot: NLP-Based Text Analysis and Knowledge Base Application [still developing, not finished yet..]
+myHelpCenterBot: NLP-Based Application [still developing, not finished yet..]
 
 This project is an NLP-driven application built with Node.js and MongoDB. It processes user text (and optionally voice input), detects language, extracts keywords, identifies intents, and stores structured results for further analysis. The system integrates a knowledge base to manage raw and processed logs, supporting intelligent responses and insights for customer interactions.
 
@@ -30,7 +30,7 @@ Workflow:
 
 the customer submit their complaint or question to the bot and the bot processed the text and provide an answer. 
 
-Database Storage – Processed logs, entities, and intents are stored in structured collections (ProcessedLogs, Entities, Intents).
+Database Storage – Processed logs, entities, and intents are stored in structured collections..
 
 Knowledge Base – Patterns and solutions are stored and linked to processed logs for future reference.
 
