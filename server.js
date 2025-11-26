@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 const { NlpManager } = require('node-nlp');
 const myModel= new NlpManager({ languages: ['en'] });
 
-const uri ='mongodb+srv://marambenmohamed14_db_user:HcdZlbOLqpVvuwEe@cluster0.hb4tsvh.mongodb.net/?appName=Cluster0';
+
 const client = new MongoClient(uri) //on crée un objet mongoClient pour connecter à l'uri donnée, mais cela  n'ouvre pas la connexion entre la db et le client
 const myDB = client.db("nlpDB");
 const feuille = myDB.collection('processedLogs') ; 
