@@ -15,7 +15,7 @@ const feuille = myDB.collection('processedLogs') ;
 async function main(){
     try{
         await client.connect();
-        app.post('/',async(req,res)=>{
+       app.post('/',async(req,res)=>{
     try{
         await myModel.load()
         const {text}=req.body

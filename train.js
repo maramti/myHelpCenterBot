@@ -1,15 +1,13 @@
 
+const { Recognizers, Culture } = require('@microsoft/recognizers-text-suite');
+const { TextEntityRecognizer, ListEntityRecognizer, RegexEntityRecognizer } = require('botbuilder');
 //in this project we want our model to take spoken input, and classify it based on what the user wants to achieve , therefore we're using intent recognition
 //we manually provide data samples and their associated intent. it will be used as training data for our model  
 // we have to put to mind that improving NLU performance demands that the focus shift from the NLU model to the training data.
 // as the project description put us in "customer help center" context=>I narrowed down the intents to three: greetings.hello , customer.help , shipping policy , return and exchange policy , track norder 
 // myModel.addDocument('en', 'hello hey greetings', 'greetings'); => this is bad practice because it takes hello hey greetings as one sentence and no one talks like that so it weakens the model. we have to put real life user utterances
-myModel.addDocument('en', 'hi there ', 'greetings ');
-myModel.addDocument('en', ' hi', 'greetings');
-myModel.addDocument('en', ' hey', 'greetings');
-myModel.addDocument('en', ' hello', 'greetings');
-myModel.addDocument('en', 'help', 'customer help');
-myModel.addDocument('en', 'problem', 'customer help');
+const recognizer = new TextEntityRecognizer();
+//here the model does get trained for intents but not for entity extraction! here, entity extraction is not machine learning !it gives us a set of lookup values but it's not data to train the model, in python however that changes with ML libraries like huggingface
 myModel.addDocument('en','Do you offer same day shipping?', 'Shipping and handling policy'); 
 myModel.addDocument("en","Can you ship to Italy?", "Shipping and handling policy");  
 myModel.addDocument("en","How long does delivery take?", "Shipping and handling policy");  //i'm trying to put words variations(package,order,delivery..) to improve the data
@@ -24,9 +22,12 @@ myModel.addDocument("en","Where's my package?", "Track order");
 myModel.addDocument("en","What's my shipping number?", "Track order");
 myModel.addDocument("en","Which carrier is my package with?", "Track order"); 
 myModel.addDocument("en","Is my package delayed?", "Track order")
-//now we add our named entities 
 //one of the unnamed tasks u have to do is an analysis for what entities and intents are best based on what you want your model to understand 
-//manager.addNamedEntityText('product',)
+//now we add our named ,pattern-based entities 
+//entities will let my model extract and isolate structured pieces of data from the user's unstructured input
+myModel.addNamedEntityText('delivery_status',null,'eng',['shipped','processing','out for delivery','delivered','delayed']);
+myModel.addRegexEntity('order_number','eng', /\b#[0-9]{4}\b/i);
+myModel.addNamedEntityText('service_type',null,'eng',['refund',' exchange', 'technical support', 'account help']);
 async function main(){
     try{
     await myModel.train()
