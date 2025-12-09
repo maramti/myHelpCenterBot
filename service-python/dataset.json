@@ -1,0 +1,12 @@
+
+{
+    "intents":[
+        {"intent":"Shipping and handling policy","samples":["Do you offer same day shipping?","Can you ship to Italy?",
+        "How long does delivery take?","Can I buy online and pick up my order in store?","What are your shipping options?"]},
+        {"intent":"return of exchange policy","samples":["My order arrived damaged, can I get a refund?","You sent me the wrong item",
+        "I want to exchange my item for another colour","I ordered something and it wasn't what I expected. Can I return it?",
+        "What's your return policy?"]},
+        {"intent":"Track order","samples":["Where's my package?","What's my shipping number?","Which carrier is my package with?",
+        "Is my package delayed?"]}
+    ]
+}

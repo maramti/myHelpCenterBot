@@ -7,7 +7,7 @@ nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('wordnet')
 lemmatizer=WordNetLemmatizer()
-text="I am maram ben mohamed, This is first try!"
+
 def preprocessing(text):
     tokens=word_tokenize(text)
     stop_words=set(stopwords.words("english"))
@@ -17,6 +17,6 @@ def preprocessing(text):
     translator=str.maketrans('', '', string.punctuation)
     cleaned_words = [word.translate(translator) for word in lemmed_words if word.translate(translator)]
     return cleaned_words
-print(preprocessing(text))
+#processor va retourner une liste composée des mots filtrés , suivant est vectorize.py 
 
 
