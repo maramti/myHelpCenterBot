@@ -3,9 +3,6 @@ import string
 from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize 
-nltk.download('stopwords')
-nltk.download('punkt')
-nltk.download('wordnet')
 lemmatizer=WordNetLemmatizer()
 
 def preprocessing(text):
@@ -16,7 +13,7 @@ def preprocessing(text):
     st=[word.lower() for word in lemmed_words]
     translator=str.maketrans('', '', string.punctuation)
     cleaned_words = [word.translate(translator) for word in lemmed_words if word.translate(translator)]
-    return cleaned_words
+    return " ".join(cleaned_words)
 #processor va retourner une liste composée des mots filtrés , suivant est vectorize.py 
 
 

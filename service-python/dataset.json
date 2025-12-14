@@ -1,12 +1,30 @@
-
 {
     "intents":[
-        {"intent":"Shipping and handling policy","samples":["Do you offer same day shipping?","Can you ship to Italy?",
-        "How long does delivery take?","Can I buy online and pick up my order in store?","What are your shipping options?"]},
-        {"intent":"return of exchange policy","samples":["My order arrived damaged, can I get a refund?","You sent me the wrong item",
-        "I want to exchange my item for another colour","I ordered something and it wasn't what I expected. Can I return it?",
-        "What's your return policy?"]},
-        {"intent":"Track order","samples":["Where's my package?","What's my shipping number?","Which carrier is my package with?",
-        "Is my package delayed?"]}
+        {
+            "intent":"Shipping and handling policy",
+            "samples":["Do you offer same day shipping?","Can you ship to Italy?","How long does delivery take?","Can I buy online and pick up my order in store?","What are your shipping options?",
+            "How much does shipping cost?","How long does shipping take?","Do you provide free shipping on orders over a certain amount?","Can I choose a specific delivery date for my order?",
+            "Will I get a notification when my order is out for delivery?","Is gift wrapping available for shipped items?","What's the estimated delivery date to Tunisia if I order today?",
+            "Do you ship internationally to countries like Japan or Australia?", "Is fast shipping available, and how much faster is it?", "What happens if my package gets lost during transit?",
+             "Are there any shipping restrictions for large or heavy items?"]
+        },
+
+        {
+            "intent":"return of exchange policy",
+            "samples":["My order arrived damaged, can I get a refund?","You sent me the wrong item","I want to exchange my item for another colour",
+            "I ordered something and it wasn't what I expected. Can I return it?","What's your return policy?","How do I return a purchased item?","Can I get replacement or refund for a defective product?",
+            "How long does it take to process a refund?","Can i exchange an online order in store?","are there additional fees for return?","I changed my mind—can I return an item if I opened it but didn't use it?",
+            "What’s the deadline for starting a return after delivery?", "Do you offer exchanges for a different size, and how does that work?", 
+            "If I return something, will you cover the return shipping cost?", "What items are non-returnable or final sale?"]
+        },
+
+        {
+            "intent":"Track order",
+            "samples":["Where's my package?","What's my shipping number?","Which carrier is my package with?","Is my package delayed?",  "Can I track my order online?",
+            "How do I check my delivery status?", "When will my package arrive?","Has my order been shipped?","Can I get updates on my shipment?","I want to know the location of my order",
+            "I got a tracking number but it's not showing any updates—what should I do?", "Can you resend the tracking link for my recent order?", 
+            "My tracking says 'delivered' but I never received it—what are my next steps?", "How do I track an order if I didn't create an account when purchasing?", 
+            "Is there a way to get real-time tracking notifications via text message?"]
+        }
     ]
 }
