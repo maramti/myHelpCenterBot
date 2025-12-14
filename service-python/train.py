@@ -10,10 +10,13 @@ from vectorize import vectorizing
 import json 
 import pickle
 from sklearn.linear_model import LogisticRegression
+from sklearn.svm import SVC
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_score
 from sklearn.metrics import accuracy_score
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import confusion_matrix
+
 sample=[]
 target=[]
 with open('dataset.json','r',encoding='utf8') as file:
@@ -24,19 +27,45 @@ for intent in train_data['intents']:
         sample.append(clean_sample) #now we encapsulate the strings into one list 'sample'.
         #tfidf later on input is a list directly made of strings not a list made of lists. One of the unnamed tasks i noticed is that i have to put in mind what each function takes as input and what's the type it returns
         target.append(intent['intent']) #the target needs to be inside the second loop(same number of entries to X and y) bc each X needs to be associated to its own label otherwise we'd have Null values in y
-log_reg=LogisticRegression(max_iter=1000)
+
 X_train,X_test,y_train,y_test=train_test_split(sample,target,train_size=0.8,random_state=42)
-X_train_matrix=vectorizing(X_train) #X est les données de training transformée en matrice
-log_reg.fit(X_train_matrix,y_train) #y n'a pas besoin d'etre transformée , elle peut etre en string et après le modèle la transforme 
-X_test_matrix=TfidfVectorizer().fit_transform(X_test) 
-print("vecteur de train: ",X_train_matrix)
-print("vecteur de test: ",X_test_matrix)
-y_pred=log_reg.predict(X_test_matrix)
-print(y_pred)
-print(y_test)
+dict=vectorizing(X_train,X_test) #les données de training et test transformée en matrice
+X_train_matrix=dict['key1']
+X_test_matrix=dict['key2']
+
+#modele régression logistique
+#log_reg=LogisticRegression(max_iter=900)
+#log_reg.fit(X_train_matrix,y_train) #y n'a pas besoin d'etre transformée , elle peut etre en string et après le modèle la transforme 
+#y_pred=log_reg.predict(X_test_matrix)
+
+#precision=precision_score(y_test,y_pred,average=None)
+#print(f"Précision pour régression logistique: {precision}")
+#accuracy=accuracy_score(y_test,y_pred)
+#print(f"accuracy: {accuracy}")
+#print(confusion_matrix(y_test,y_pred))
+
+#modele Support Vector Machine
+classifier = SVC(kernel="linear")
+classifier.fit(X_train_matrix, y_train)
+y_pred=classifier.predict(X_test_matrix)
+
 precision=precision_score(y_test,y_pred,average=None)
-print(f"Précision: {precision}")
+print(f"Précision pour svm: {precision}")
 accuracy=accuracy_score(y_test,y_pred)
 print(f"accuracy: {accuracy}")
-with open('log_reg.pkl','wb') as f :
-   pickle.dump(log_reg,f) #we pickle the model to not build a new one each time , we just unpickle it out of the disk! 
+print(confusion_matrix(y_test,y_pred))
+
+#modele multinomial naive bayes
+#modele=MultinomialNB()
+#modele.fit(X_train_matrix,y_train)
+#y_pred=modele.predict(X_test_matrix)
+#precision=precision_score(y_test,y_pred,average=None)
+#print(f"Précision pour multinomial NB: {precision}")
+#accuracy=accuracy_score(y_test,y_pred)
+#print(f"accuracy: {accuracy}")
+#print(confusion_matrix(y_test,y_pred))
+
+#apres comparaison entre les 'confusion matrix' et les 'metrics' , je choisis le SVM . 
+
+with open('model.pkl','wb') as f :
+   pickle.dump(classifier,f) #we pickle the model to not build a new one each time , we just unpickle it out of the disk! 
