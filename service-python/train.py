@@ -9,6 +9,7 @@ from processor import preprocessing
 from vectorize import vectorizing
 import json 
 import pickle
+import sklearn 
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.naive_bayes import MultinomialNB
@@ -16,6 +17,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import precision_score
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix
+from sklearn.calibration import CalibratedClassifierCV
 
 sample=[]
 target=[]
@@ -44,16 +46,20 @@ X_test_matrix=dict['key2']
 #print(f"accuracy: {accuracy}")
 #print(confusion_matrix(y_test,y_pred))
 
-#modele Support Vector Machine
+#modele Linear Support Vector Classifier
 classifier = SVC(kernel="linear")
-classifier.fit(X_train_matrix, y_train)
-y_pred=classifier.predict(X_test_matrix)
-
+calibrated_classifier=CalibratedClassifierCV(classifier)
+calibrated_classifier.fit(X_train_matrix, y_train)
+y_pred=calibrated_classifier.predict(X_test_matrix)
 precision=precision_score(y_test,y_pred,average=None)
 print(f"Précision pour svm: {precision}")
 accuracy=accuracy_score(y_test,y_pred)
 print(f"accuracy: {accuracy}")
 print(confusion_matrix(y_test,y_pred))
+if(hasattr(calibrated_classifier, "predict_proba") == True):
+    print('true')
+else:
+    print('false')
 
 #modele multinomial naive bayes
 #modele=MultinomialNB()
@@ -65,7 +71,7 @@ print(confusion_matrix(y_test,y_pred))
 #print(f"accuracy: {accuracy}")
 #print(confusion_matrix(y_test,y_pred))
 
-#apres comparaison entre les 'confusion matrix' et les 'metrics' , je choisis le SVM . 
+#apres comparaison entre les 'confusion matrix' et les 'metrics' des trois modèles, je choisis le SVM . 
 
 with open('model.pkl','wb') as f :
-   pickle.dump(classifier,f) #we pickle the model to not build a new one each time , we just unpickle it out of the disk! 
+   pickle.dump(calibrated_classifier,f) #we pickle the model to not build a new one each time , we just unpickle it out of the disk! 

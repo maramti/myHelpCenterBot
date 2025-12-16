@@ -1,37 +1,53 @@
 myHelpCenterBot: NLP-Based Application [still developing, not finished yet..]
 
-This project is an NLP-driven application built with Node.js and MongoDB. It processes user text (and optionally voice input), detects language, extracts keywords, identifies intents, and stores structured results for further analysis. The system integrates a knowledge base to manage raw and processed logs, supporting intelligent responses and insights for customer interactions.
+This project is an NLP-driven application built with Node.js,NLP(python),FastAPI and MongoDB. It processes user text (and optionally voice input), extracts keywords, identifies intents, and stores structured results as processed log in a database. The system function is to understand customer's question or problem and classify its context then provide an answer. 
 
-Features : 
+=> Pipeline :
 
--Converts voice messages to text 
+1 User Input – The user submits a text.
 
--Identifies user intent and extracts entities from text
+2 Preprocessing 
 
--Stores processed logs, entities, and intents in MongoDB in structured form
+3 Vectorization 
 
--Builds a knowledge base of patterns, common issues, and suggested solutions
+5 Intent Classification 
 
--Provides a REST API for submitting text, retrieving logs, and querying the knowledge base
+6 Provide answer
 
--Supports multiple languages via NLP.js
+=> Current Features
+
+Text preprocessing (cleaning, normalization, tokenization)
+
+TF-IDF vectorization of text data
+
+Training and saving of an intent classification model 
+
+Evaluation of model performance (precision, confusion matrix, accuracy)
+
+API endpoint for predicting the intent of new text
+
+=> Planned Features
+
+Integration of a knowledge base
+
+REST API for model predictions and knowledge base queries
+
+Optional voice-to-text input for audio queries
+
+Simple user interface (web or mobile) for submitting queries and receiving responses
+
+Support for multiple languages
 
 Technologies Used
 
-Node.js / Express.js – Backend server and API
+Python 3.10+ – Core programming language
 
-MongoDB Atlas – Database for logs and knowledge base
+scikit-learn – TF-IDF, Logistic Regression, SVM, Naive Bayes
 
-NLP.js – Natural language processing, intent classification, and entity extraction
+pickle – Saving and loading trained models and vectorizers
 
-Voice-to-Text Libraries – For audio input processing
+FastAPI – REST API for real-time predictions
 
-Workflow:
+MongoDB / JSON – Storage of text data, processed logs, and future knowledge base
 
-the customer submit their complaint or question to the bot and the bot processed the text and provide an answer. 
-
-Database Storage – Processed logs, entities, and intents are stored in structured collections..
-
-Knowledge Base – Patterns and solutions are stored and linked to processed logs for future reference.
-
-API Access – REST endpoints provide access to NLP processing results and knowledge base queries.
+Node.js
