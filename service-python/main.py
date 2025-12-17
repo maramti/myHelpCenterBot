@@ -3,8 +3,8 @@ import asyncio
 from fastapi import FastAPI 
 import pickle
 from processor import preprocessing
-from extract_entity import find
-from datetime import datetime
+from extract_entity import extract_entity
+from datetime import datetime,timezone
 app=FastAPI()
 
 model=pickle.load(open('model.pkl','rb'))
@@ -13,6 +13,7 @@ vectorizer=pickle.load(open('vectorizer.pkl','rb')) #we unpickle our vectorizer 
 @app.post('/api/request')
 def callformodel(input:dict):
     user_input=input.get("text")
+    entities=extract_entity(user_input)
     clean_input=preprocessing(user_input)
     vector=vectorizer.transform([clean_input]) #on ne doit pas oublier que transform prend une liste 
     stats=model.predict_proba(vector)
@@ -23,8 +24,8 @@ def callformodel(input:dict):
         "utterance": user_input,
         "intent": intent,
         "confidence": confidence,
-        "entities": [], 
-        "timestamp": datetime.utcnow().isoformat()
+        "entities": entities, 
+        "timestamp": datetime.now(timezone.utc).isoformat()
     }
 
     return processed_log
