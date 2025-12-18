@@ -4,7 +4,7 @@ const client = new MongoClient(uri) //on crée un objet mongoClient pour connect
 
 async function connect(){
     try{
-        const result=await client.connect()
+        await client.connect()
         console.log('serveur connecté avec la base');
     }catch(e){
         console.error(e)

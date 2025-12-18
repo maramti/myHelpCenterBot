@@ -1,53 +1,83 @@
-myHelpCenterBot: NLP-Based Application [still developing, not finished yet..]
+# NLP-Based Customer Help Center Chatbot
 
-This project is an NLP-driven application built with Node.js,NLP(python),FastAPI and MongoDB. It processes user text (and optionally voice input), extracts keywords, identifies intents, and stores structured results as processed log in a database. The system function is to understand customer's question or problem and classify its context then provide an answer. 
+This project is a **NLP-based chatbot** designed to handle customer queries about an online clothing order. It integrates a machine learning model for intent classification, extracts relevant entities, and provides rule-based answer. The system architecture includes a **frontend** built in React, a **backend Node.js server**, and a **Python service with FastAPI** for NLP processing. **MongoDB** is used to store processed logs.
 
-=> Pipeline :
+Frontend (React) <-> Node.js Backend <-> Python NLP Service (FastAPI)
+                            ||
+                          mongodb
+## Technologies Used
 
-1 User Input – The user submits a text.
+- **Frontend:** React.js for building the user interface
+- **Backend:** Node.js is the bridge connecting the frontend and the Python NLP service. It handles http requests from the user, communicates with the NLP backend, stores logs in MongoDB, and returns the processed response to the user
+- **NLP Service:** Python with FastAPI exposing a trained machine learning model.
+- **Database:** MongoDB to store processed logs including user utterances, detected intents, entities, confidence, and timestamps.
+- **Machine Learning:** Support Vector Machine (SVM) classifier with confidence score
+- **Others:** Axios for HTTP requests from the frontend to the backend and from backend to python service, CORS enabled for cross-origin requests.
 
-2 Preprocessing 
+---
 
-3 Vectorization 
+## Features
 
-5 Intent Classification 
+1. **Intent Classification:**  
+   - Uses a trained SVM model to predict user intent based on the text input.
+   - Predicts confidence for the classification.
 
-6 Provide answer
+2. **Entity Extraction:**  
+   - Extracts entities such as regex / list based ones:
+     - `order_number`
+     - `date`
+     - `price`
+     - `size`
+     - `location` (`house`, `home`)
+     - `country` (`Tunisia`, `France`, `USA`)
 
-=> Current Features
+3. **Conversation Logging:**  
+   - All processed queries are logged in MongoDB with details including:
+     - `utterance`
+     - `intent`
+     - `confidence`
+     - `entities`
+     - `timestamp`
 
-Text preprocessing (cleaning, normalization, tokenization)
+4. **Interactive Frontend:**  
+   - Users can type questions and receive answers.
+   - Responses include detected intent, entities, and confidence score.
+   - Simple chat interface with a chatbot image floating.
 
-TF-IDF vectorization of text data
+5. **Machine Learning Pipeline:**  
+   - **Preprocessing:**
+   - **Vectorization:** 
+   - **Training:** 
+   - **Persistence:** (pickle python module)
 
-Training and saving of an intent classification model 
+---
 
-Evaluation of model performance (precision, confusion matrix, accuracy)
+## How It Works ? :
 
-API endpoint for predicting the intent of new text
+1. **User Interaction:**  
+   - User types a message in the React frontend.
+   - Frontend sends a POST via axios request to `Node.js` backend at `/api/request`.
 
-=> Planned Features
+2. **Backend Processing:**  
+   - Node.js server receives the request.
+   - Sends the user input to the Python NLP service via Axios.
+   - Receives predicted intent, entities, confidence, and timestamp.
 
-Integration of a knowledge base
+3. **Logging:**  
+   - Backend logs the processed query into MongoDB database named mynlpDB , collection : processedlogs (repeated utterances are not logged=>basic error handling)
 
-REST API for model predictions and knowledge base queries
+4. **Response:**  
+   - Backend returns the processed log to the frontend.
 
-Optional voice-to-text input for audio queries
+5. **NLP Service (Python/FastAPI):**  
+   - Preprocesses the text.
+   - Extracts entities using `extract_entity.py`.
+   - Converts text to feature vector using the pickled vectorizer.
+   - Predicts intent and confidence using the trained SVM model.
 
-Simple user interface (web or mobile) for submitting queries and receiving responses
+---
 
-Support for multiple languages
-
-Technologies Used
-
-Python 3.10+ – Core programming language
-
-scikit-learn – TF-IDF, Logistic Regression, SVM, Naive Bayes
-
-pickle – Saving and loading trained models and vectorizers
-
-FastAPI – REST API for real-time predictions
-
-MongoDB / JSON – Storage of text data, processed logs, and future knowledge base
-
-Node.js
+**Proposed Enhancements:**
+-Contextual understanding
+-able to handle conversation 
+-have a real database of products 
